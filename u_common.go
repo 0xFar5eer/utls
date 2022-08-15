@@ -109,6 +109,7 @@ const (
 	helloChrome           = "Chrome"
 	helloIOS              = "iOS"
 	helloAndroid          = "Android"
+	helloInstagram        = "Instagram"
 
 	// versions
 	helloAutoVers = "0"
@@ -170,6 +171,9 @@ var (
 	HelloIOS_12_1 = ClientHelloID{helloIOS, "12.1", nil}
 	HelloIOS_13   = ClientHelloID{helloIOS, "13", nil}
 	HelloIOS_14   = ClientHelloID{helloIOS, "14", nil}
+
+	HelloInstagram_Auto = HelloInstagram_1
+	HelloInstagram_1    = ClientHelloID{helloInstagram, "1", nil}
 
 	HelloAndroid_11_OkHttp = ClientHelloID{helloAndroid, "11", nil}
 )
