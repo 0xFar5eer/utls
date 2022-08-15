@@ -18,21 +18,20 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 	switch id {
 	case HelloInstagram_1:
 		return ClientHelloSpec{
+			TLSVersMin: VersionTLS10,
+			TLSVersMax: VersionTLS13,
 			CipherSuites: []uint16{
 				TLS_AES_128_GCM_SHA256,
 				TLS_AES_256_GCM_SHA384,
 				TLS_CHACHA20_POLY1305_SHA256,
 			},
 			CompressionMethods: []byte{
-				0x00, // compressionNone
+				compressionNone, // compressionNone
 			},
 			Extensions: []TLSExtension{
 				&SupportedVersionsExtension{[]uint16{
-					// VersionTLS13, //supported_versions
-					// VersionTLS13_Facebook,
-					VersionTLS10,
-					VersionTLS11,
-					VersionTLS12,
+					VersionTLS13, //supported_versions
+					VersionTLS13_Facebook,
 				}},
 				&SupportedCurvesExtension{[]CurveID{ //supported_groups
 					X25519,
