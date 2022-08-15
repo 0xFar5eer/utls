@@ -28,9 +28,11 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 			},
 			Extensions: []TLSExtension{
 				&SupportedVersionsExtension{[]uint16{
+					// VersionTLS13, //supported_versions
+					// VersionTLS13_Facebook,
+					VersionTLS10,
+					VersionTLS11,
 					VersionTLS12,
-					VersionTLS13, //supported_versions
-					VersionTLS13_Facebook,
 				}},
 				&SupportedCurvesExtension{[]CurveID{ //supported_groups
 					X25519,
