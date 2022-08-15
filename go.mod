@@ -1,4 +1,4 @@
-module github.com/0xFar5eer/utls/v2
+module github.com/0xFar5eer/utls
 
 go 1.16
 
