@@ -174,6 +174,7 @@ var (
 
 	HelloInstagram_Auto = HelloInstagram_1
 	HelloInstagram_1    = ClientHelloID{helloInstagram, "1", nil}
+	HelloInstagram_2    = ClientHelloID{helloInstagram, "2", nil}
 
 	HelloAndroid_11_OkHttp = ClientHelloID{helloAndroid, "11", nil}
 )

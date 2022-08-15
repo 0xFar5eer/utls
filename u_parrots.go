@@ -18,6 +18,46 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 	switch id {
 	case HelloInstagram_1:
 		return ClientHelloSpec{
+			CipherSuites: []uint16{
+				TLS_AES_128_GCM_SHA256,
+				TLS_AES_256_GCM_SHA384,
+				TLS_CHACHA20_POLY1305_SHA256,
+			},
+			CompressionMethods: []byte{
+				compressionNone, // compressionNone
+			},
+			Extensions: []TLSExtension{
+				&SupportedVersionsExtension{[]uint16{
+					VersionTLS13,
+					VersionTLS13_Facebook, //supported_versions
+				}},
+				&SupportedCurvesExtension{[]CurveID{ //supported_groups
+					X25519,
+					CurveP256,
+				}},
+				&KeyShareExtension{[]KeyShare{
+					{Group: X25519, Data: []byte{0}}, //key_share; Maybe set value??? https://software.valar-solutions.com/Hosting/screenshots/2022-08-15_23-04-07.png
+				}},
+				&SignatureAlgorithmsExtension{SupportedSignatureAlgorithms: []SignatureScheme{ //signature_algorithms
+					ECDSAWithP256AndSHA256,
+					ECDSAWithP384AndSHA384,
+					ECDSAWithP521AndSHA512,
+					PSSWithSHA256,
+				}},
+				&ALPNExtension{AlpnProtocols: []string{"h2", "h2-fb", "http/1.1"}}, // application_layer_protocol_negotiation
+				&PSKKeyExchangeModesExtension{[]uint8{ //psk_key_exchange_modes
+					PskModeDHE,
+					pskModePlain,
+				}},
+				&GenericExtension{ // early_data
+					Id:   42,
+					Data: []byte{0}, // is it needed?
+				},
+				// pre_shared_key should be auto added???
+			},
+		}, nil
+	case HelloInstagram_2:
+		return ClientHelloSpec{
 			TLSVersMin: VersionTLS10,
 			TLSVersMax: VersionTLS12,
 			CipherSuites: []uint16{
@@ -47,9 +87,6 @@ func utlsIdToSpec(id ClientHelloID) (ClientHelloSpec, error) {
 					ECDSAWithP521AndSHA512,
 					PSSWithSHA256,
 				}},
-				&SNIExtension{ //server_name
-					ServerName: "i.instagram.com",
-				},
 				&ALPNExtension{AlpnProtocols: []string{"h2", "h2-fb", "http/1.1"}}, // application_layer_protocol_negotiation
 				&PSKKeyExchangeModesExtension{[]uint8{ //psk_key_exchange_modes
 					PskModeDHE,
